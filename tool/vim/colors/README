@@ -1,0 +1,10 @@
+
+#2016-12-04
+GUI配色转换成Term配色
+使用脚本：gui2term.py（要求>=Python3)
+
+1. 将要准备装换的molokai.vim 与 gui2term.py放在用一个文件夹内，同时将vim中的rgb.txt也拷贝到该文件夹内
+2. 将 molokai.vim 文件中的 所有终端配色删除（所有cterm)
+3. 执行：python3 ./gui2term.py molokai.vim molokai_term.vim
+4. 第2步执行完毕会生成 molokai_term.vim ,修改该文件内的let g:colors_name="molokai_term"
+5. 将修改好的molokai_term.vim 配置成终端下vim的配色方案，便可看到效果了
