@@ -1,0 +1,626 @@
+#This is useful, if you want to remove systemwide aliases from your config:
+# Clean up unwanted system aliases and start from scratch.
+unhash -am '*'
+
+##########################################
+# .bashrc
+##########################################
+#{{{命令别名
+## zsh special
+alias -g ...=../../
+alias -g ....=../../../
+alias -g .....=../../../../
+
+alias -g NL="> /dev/null 2>&1"
+##########################################
+alias lp='ls *.cpp *.h *.c'
+#alias gp='g++ -Wall'
+##########################################
+alias dt="date '+%y%m%d-%H%M%S'"
+alias atl='autotitle'
+alias o='open'
+
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias pn='vim /Users/lixl/Project/ProjectNote/ProjectNote.txt'
+alias n='vim /d/文档/noting.txt'
+
+alias vi='vim -X'
+alias vim='vim -X'
+alias vimdiff='vimdiff -X'
+alias p1='put outside '
+alias gp='ps -W | grep --color'
+alias vdf="vimdiff"
+alias wb="w3m -B"
+alias ls='ls -G'
+alias rd='rmdir'
+alias md='mkdir'
+alias cvc='cd ; clear'
+alias cl='clear ;ls -lh'
+alias ll='ls -l'
+alias lt="ls *.txt"
+alias l='ls -lh'
+alias la='ls -a'
+alias s='cd .. ; ls '
+alias x='cd "$OLDPWD" ; ls '
+alias c='clear'
+alias df='df -h'
+alias du='du -sh'
+alias m='more'
+alias g='grep --color'
+#alias grep='grep --color'
+alias grep='grep -n --color'
+alias wl='wc -l'
+alias wh='which'
+alias jb='jobs'
+alias cx='chmod u+x'
+#alias gvim="gvim -display 127.0.0.1:0.0"
+#alias date="date '+%y%m%d-%H%M%S-'"
+alias us="unsee"
+
+#command set
+alias pst="pstree -p"
+
+#screen set
+alias sm="screen man"
+alias sc="screen"
+alias sv="screen vi"
+alias sl="screen -list"
+alias sr="screen -r"
+alias st="screen -t"
+alias ss="screen -S share"
+alias sx="screen -x "
+alias sw="screen -wipe"
+
+####zsh set
+alias zs='. ~/.zshrc'
+alias vz='vi ~/.zshrc'
+
+#alias xpdf='xpdf -bg black -rv -display 127.0.0.1:0.0 '
+alias xpdf='xpdf -bg black -display 127.0.0.1:0.0 '
+#alias viml='vimless.sh'
+alias cvc='cd ; clear'
+alias ctar='tar cvf'
+alias etar='tar xvf'
+
+#easy use setup
+alias dospath='cygpath --windows'
+alias unixpath='cygpath --unix'
+alias cab='cd "`abpath`"'
+
+#}}}
+##########################################
+#{{{ soft to use
+
+# +++SOFT+++
+# chemdata chrome daily vagaa calc pptview word excel
+# wopti fmail xstart emule oveplay ovemusic maxthon
+# firefox photoshop go game origin origin8 chem math
+# xunlei ssreader pword draw lingoes seten taskmgr
+# notepad grid kmpl kftp pdfread stardict webster longman
+
+#stardict(){
+#	nohup "/cygdrive/c/Program Files/StarDict/stardict.exe" >/dev/null 2>&1 &
+#}
+
+to640x(){
+	convert -resize 640x "$1" "$1"
+}
+
+#}}}
+##########################################
+#{{{ Functions
+
+function 2html() { vim -n -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa' $1 > /dev/null 2> /dev/null }
+
+function precmd {
+	if [ $_flag_autotitle -eq 0 ];then
+		echo -ne "\033]83;title `basename $PWD`\007"
+	fi
+}
+_flag_autotitle=0
+function autotitle(){
+	if [ $_flag_autotitle -eq 1 ];then
+		_flag_autotitle=0
+	else
+		_flag_autotitle=1
+		echo "Shut down autotitle"
+	fi
+}
+
+function wcd(){
+	ldir=`cygpath -u "$1"`
+	cd $ldir
+}
+
+function towin(){
+	scp "$1" Administrator@192.168.1.150:/d/temp/
+}
+
+function getwin() {
+	scp Administrator@192.168.1.150:/d/temp/$1 .
+}
+
+function tovm(){
+	scp "$1" weblixl@voltmemo.com:~/
+}
+
+function getvm() {
+	scp weblixl@voltmemo.com:~/$1 .
+}
+function getz1() {
+	scp weblixl@z1.voltmemo.com:~/$1 .
+}
+function toz1(){
+	scp "$1" weblixl@z1.voltmemo.com:~/
+}
+
+gvd(){
+	dospath $PWD | sed 's/\\/\//g'
+	return 0
+}
+
+cv(){
+	#echo $@
+	cd "$@" ; ls 
+}
+
+#md(){ #命名用日期
+#	if [ $# != 0 ];then
+#		echo "命名用日期"
+#		return 1
+#	fi
+##	date '+%y%m%d%H%M%S'
+#	date '+%y%m%d%H'
+#	return 0
+#}
+
+vf(){ #编辑$PATH中的脚本
+	if [ $# != 1 ];then
+		echo "Useage:编辑\$PATH中的脚本"
+		return 0
+	fi
+	vi `wh $1`
+	return 0
+}
+
+zm(){
+	cd ~/zm/
+	#ls -lh
+}
+
+#}}}
+##########################################
+#{{{ variables
+
+export MAGICK_HOME="$HOME/bin/ImageMagick-6.8.8"
+export PATH="$MAGICK_HOME/bin:$PATH:$HOME/Applications/android-ndk-r10c/:$HOME/Applications/sdk/platform-tools:/Users/xwj-imac2/dev/android-ndk-r13b:/Users/xwj-imac2/Library/Android/sdk/platform-tools"
+export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
+
+export CYGWIN=nodosfilewarning
+
+export  DISPLAY="127.0.0.1:0.0"
+export  LS_COLORS='ow=01;34'
+#export	PATH=$HOME/bin:/usr/local/bin:$PATH
+export  PATH=$HOME/bin:/opt/local/bin:$PATH
+#export  PATH=$HOME/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/lib/lapack:/d/软件/vs2008/vc/bin
+export	LESSCHARSET=latin1
+export	TERM=rxvt
+#export	TERM=xterm
+
+#export	LC_CTYPE=zh_CN.gbk
+#export	LC_CTYPE=zh_CN.gbk
+#export	CHARSET=GBK
+#export	XLOCALE=zh_CN.gbk
+#export	LC_CTYPE=zh_CN.GBK
+#export	LC_MONETARY=zh_CN.GBK
+#export	LC_NUMERIC=zh_CN.GBK
+#export	LC_MESSAGES=zh_CN.GBK
+#export	LC_TIME=zh_CN.GBK
+#export	LC_COLLATE=zh_CN.GBK
+#export	LC_ALL=zh_CN.GBK
+
+export	CHARSET=UTF-8
+export	OUTPUT_CHARSET="UTF-8"
+export	LANGUAGE=zh_CN.UTF-8
+export	LANG=zh_CN.UTF-8
+
+# export	CHARSET=GBK
+# export	OUTPUT_CHARSET="GBK"
+# export	LANGUAGE=zh_CN.GB2312:zh_CN.GBK:zh_CN:zh
+# export	LANG=zh_CN.GBK
+
+#export	LC_CTYPE=en_US
+#export	LC_CTYPE=en_US
+#export	CHARSET=en_US
+#export	XLOCALE=en_US
+#export	LC_CTYPE=en_US
+#export	LC_MONETARY=en_US
+#export	LC_NUMERIC=en_US
+#export	LC_MESSAGES=en_US
+#export	LC_TIME=en_US
+#export	LC_COLLATE=en_US
+#export	LANG=en_US
+#export	LC_ALL=en_US
+# export	LANGUAGE=en_US
+# export	CHARSET=en_US
+# export	LANG=en_US
+# export	OUTPUT_CHARSET=en_US
+
+#}}}
+########################################## .bashrc END
+
+##########################################
+# MINE SET
+##############################################
+setopt autocd #输入文件名即可进入目录
+setopt extendedglob #扩展文件名匹配设置
+setopt no_case_glob
+
+##############################################
+#{{{ 文件关联设置
+##############################################
+
+autoload -U zsh-mime-setup #设置文件关联
+zsh-mime-setup
+
+#alias -s chm=gnochm
+#alias -s jpg=ristretto
+#alias -s png=ristretto
+#alias -s gif=ristretto
+#alias -s pdf=pdfread
+alias -s htm=w3m
+alias -s html=w3m
+alias -s txt=vim
+alias -s vim=vim
+
+#}}}
+##############################################
+compctl -g '*.htm *.html *.mht' + -g '*(-/)' firefox w3m
+compctl -g '*(-/) .*(-/)' cd cv
+#compctl -g '*.txt *.vim *.c *.cpp *.h *.hpp' + -g '*(-/)' vi
+compctl -g '*.txt *.vim *.c *.cpp' gvim
+
+# no binary files for vi
+# zstyle ':completion:*:vi:*' ignored-patterns '*.(o|a|so|aux|dvi|log|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+# zstyle ':completion:*:vim:*' ignored-patterns '*.(o|a|so|aux|dvi|log|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+# zstyle ':completion:*:gvim:*' ignored-patterns '*.(o|a|so|aux|dvi|log|swp|fig|bbl|blg|bst|idx|ind|out|toc|class|pdf|ps)'
+
+##########################################
+#{{{ 路径别名 ROUTE
+##########################################
+
+hash -d asrc="/Users/lixl/Project/Android/AndroidStudioProjects/XZ_CiDao/"
+#}}}
+##########################################
+#{{{ ANY ZSH
+
+export HISTSIZE=2000
+export HISTFILE="$HOME/.zhistory"
+#(History won't be saved without the following command)
+export SAVEHIST=$HISTSIZE
+
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+#RPROMPT='%/'
+#PROMPT='%{[36m%}%n%{[35m%}@%{[34m%}%M %{[33m%}%D %T  %{[32m%}%/
+#%{[31m%}>>%{[m%}'
+
+PROMPT='%{[32m%}%D %T %{[36m%}%n@ %{[33m%}%~%{[m%}
+$ '
+
+#PROMPT='%{[32m%}%D %T @%{[33m%}%~/%{[m%}
+#S '
+
+## append command to history file once executed
+setopt INC_APPEND_HISTORY
+
+#Disable core dumps
+#limit coredumpsize 0
+
+#设置DEL键为向后删除
+bindkey "\e[3~" delete-char
+
+#以下字符视为单词的一部分
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+
+#自动补全功能
+setopt AUTO_LIST
+setopt AUTO_MENU
+setopt MENU_COMPLETE
+
+autoload -U compinit
+compinit
+
+# Completion caching
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path .zcache
+#zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+#Completion Options
+zstyle ':completion:*:match:*' original only
+zstyle ':completion::prefix-1:*' completer _complete
+zstyle ':completion:predict:*' completer _complete
+zstyle ':completion:incremental:*' completer _complete _correct
+zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+
+# Path Expansion
+zstyle ':completion:*' expand 'yes'
+zstyle ':completion:*' squeeze-shlashes 'yes'
+zstyle ':completion::complete:*' '\\'
+
+zstyle ':completion:*:*:*:default' menu yes select
+zstyle ':completion:*:*:default' force-list always
+
+# GNU Colors 需要/etc/DIR_COLORS文件 否则自动补全时候选菜单中的选项不能彩色显示
+[ -f /etc/DIR_COLORS ] && eval $(dircolors -b /etc/DIR_COLORS)
+export ZLSCOLORS="${LS_COLORS}"
+zmodload zsh/complist
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+compdef pkill=kill
+compdef pkill=killall
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:processes' command 'ps -au$USER'
+
+# Group matches and Describe
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:descriptions' format $'\e[01;33m -- %d --\e[0m'
+zstyle ':completion:*:messages' format $'\e[01;35m -- %d --\e[0m'
+zstyle ':completion:*:warnings' format $'\e[01;31m -- No Matches Found --\e[0m'
+
+##for Emacs在Emacs终端中使用Zsh的一些设置 不推荐在Emacs中使用它
+if [[ "$TERM" == "dumb" ]]; then
+    setopt No_zle
+    PROMPT='%n@%M %/
+    >>'
+    alias ls='ls '
+fi
+
+# and don't kill them, either
+setopt nohup                   
+#setopt nolisttypes             # show types in completion
+#setopt printexitvalue          # alert me if something's failed
+# _all_ zsh sessions share the same history files
+setopt share_history           
+# don't overwrite history 
+setopt appendhistory           
+
+#}}}
+##########################################
+
+
+########################################## vim:fdm=marker
+
+
+#{{{ RS define
+
+#在finder 中打开当前路径
+function xpl {
+     if [ "$1" = "" ]; then
+         XPATH=.   # 缺省是当前目录
+     else
+         XPATH=$1
+         #XPATH="$(cygpath -C ANSI -w "$XPATH")";
+     fi
+     open $XPATH
+}
+
+# 更多用法参考 fzf:github
+#在finder中打开你想打开的目录
+function xpl2() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  open "$dir"
+}
+
+# cdcd - cd to selected directory
+function cdcd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# 跨目录cd
+# 命令: cdcd main
+# function cdcd {
+# 	#RES_PATH="$(find . -name "$1")";
+# 	RES_PATH=`find . -name "$1"`;
+# 	if [ "$RES_PATH" = "" ];then
+# 		echo "no such file or directory : $1";
+# 	else
+# 		cd "$RES_PATH";
+# 	fi
+# }
+
+# cdcd 升级版
+# 如果有重复目录，可提供候选项进行跳转
+# 目录名重复的情况下, 列出候选项
+# 废弃: fzf命令替代
+# function cdcd {
+# 	array=()
+# 	while IFS=  read -r -d $'\0'; do
+#     		array+=("$REPLY")
+# 	done < <(find . -name ${1} -print0)
+# 
+# 	len=${#array[*]}
+# 	if [ $len -gt 1 ];then
+# 		for ((i=1; i<=$len; i++));
+# 		do
+# 			echo_str=">[$i] ${array[$i]}"
+# 			echo $echo_str
+# 		done
+# 
+# 		echo "发现多个目录，请输入序号: "
+# 		while true
+# 		do
+# 			read path_index
+# 			if [[ "$path_index" =~ [^0-9] ]];then
+# 				echo "请输入整数:"
+# 			elif [[ $path_index -ge 1 && $path_index -le $len ]];then
+# 				echo $path_index
+# 				break
+# 			else
+# 				echo "请输入1-${len}:"
+# 			fi
+# 		done
+# 
+# 		cd ${array[$path_index]}
+# 	elif [ $len -eq 1 ];then
+# 		cd ${array[1]}
+# 	else
+# 		echo "没有找到该目录"
+# 	fi
+# }
+
+# 查找某个文件并打开(可跨目录): vifi
+# 命令: vifi xxx.java 
+# 废弃: fzf命令替代
+# function vifi {
+# 	RES_PATH=`find . -name "$1"`;
+# 	if [ "$RES_PATH" = "" ];then
+# 		echo "no such file or directory : $1";
+# 	else
+# 		vi "$RES_PATH";
+# 	fi
+# }
+
+# 查找某个字符并在vi中打开, 并定位到该字符第一次出现的位置: vigrep
+# 命令: vigrep FIXME
+function vigrep {
+	RES_PATH=`grep -ri "$1" * -l`;
+	if [ "$RES_PATH" = "" ];then
+		echo "no such words : $1";
+	else
+		vi `grep -ri "$1" * -l` +/$1;
+	fi
+}
+
+# 批量重命名： 支持一个接一个的待用户命名
+# 命令：allrename
+# TODO: 更加灵活，增加匹配文件的参数
+function allrename {
+	profix=$1;
+	echo "文件名前缀为: $1"
+	echo "即将开始批量手动重命名, [ctrl+c退出]"
+	if [ ! -d "rename" ];then
+		mkdir rename;
+	fi
+	for i in *.png;
+	do
+		echo $i;
+		read name
+		cp "$i" "rename/${profix}${name}.png";
+	done
+}
+
+# function batchrename {
+# 	profix=$1;
+# 	echo "文件名前缀为: $1"
+# 	echo "即将开始批量手动重命名, [ctrl+c退出]"
+# 	if [ ! -d "rename_test" ];then
+# 		mkdir rename_test;
+# 	fi
+# 	while read file;
+# 	do
+# 		echo $file;
+# 		read name
+# 		cp "$file" "rename_test/${profix}${name}.png";
+# 	done
+# }
+
+# 修改ls显示的目录的颜色 
+LS_COLORS='no=00;37:fi=00:di=4;36:ln=04;36:pi=40;33:so=01;35:bd=40;33;01:'
+export LS_COLORS
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+#查看压缩文件内的根目录
+alias rootdir=' awk -F "/" "{print $1}" | tail -n 1'
+
+alias desktop='cd ~/Desktop'
+
+RS_ROOT=~/RS
+alias rs="cd $RS_ROOT"
+alias work="cd $RS_ROOT/work"
+alias tasks="cd $RS_ROOT/tasks"
+
+PROJECT=~/project
+alias project="cd $PROJECT"
+alias android="cd $PROJECT/Android"
+alias ios="cd $PROJECT/IOS"
+alias tool="cd $PROJECT/tools"
+
+alias data='cd /Volumes/Data'
+alias backup='cd /Volumes/Data/backup'
+alias backa='cd /Volumes/Data/backup/android'
+alias backi='cd /Volumes/Data/backup/ios'
+
+alias acount="cat $RS_ROOT/work/调试账号.txt"
+
+alias fzf='fzf --height 40% --reverse'
+alias vifi='vim $(fzf)'
+# zz项目管理
+# 最最日语：工程开发工作方式
+
+# 创建工程
+# 列出位于基础目录下的文件，选择一个基础版本，拷贝基础代码到当前目录下，解压，并删除拷贝的基础代码
+# command: new <android>|<ios>
+function zzbackup {
+	sh $RS_ROOT/work/zz.sh $1 $2
+}
+function moveto {
+	sh $RS_ROOT/work/zz.sh move $1
+}
+function talkroomdialog_json_convert {
+	sh $RS_ROOT/work/zz.sh talkroomdialog_json_convert $1 $2
+}
+function getDailyTheater {
+	sh $RS_ROOT/work/zz.sh get_daily_theater $1
+}
+alias new-android="sh $RS_ROOT/work/zz.sh create-android"
+alias new-ios="sh $RS_ROOT/work/zz.sh create-ios"
+alias zzba="zzbackup backup-android"
+alias zzbi="zzbackup backup-ios"
+alias show="sh $RS_ROOT/work/zz.sh show"
+alias move="moveto"
+alias zzencrypt="talkroomdialog_json_convert encrypt"
+alias zzdecrypt="talkroomdialog_json_convert decrypt"
+alias theater="getDailyTheater"
+alias localtheater="sh $RS_ROOT/work/zz.sh get_local_theater"
+
+# 试题助教编辑格式转换成json格式
+function tojson {
+	cmd=$1
+	if [ "$1" = "all" ];then
+		for i in *.txt
+		do
+			php -e ~/project/tools/试题转换/tojson.php $i "test"
+		done
+	else
+		php -e ~/project/tools/试题转换/tojson.php $1 "test"
+	fi
+}
+
+#}}}
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+#export ALL_PROXY=socks5://127.0.0.1:1080
+#export ALL_PROXY=https://128.0.0.1:1080
+export PATH=/usr/local/Homebrew/bin:$PATH
+# Araxis Merge command-line utilities
+export PATH=$PATH:/Applications/Araxis\ Merge.app/Contents/Utilities
+
+alias tmux="tmux -2 -f ~/.tmux.conf"
